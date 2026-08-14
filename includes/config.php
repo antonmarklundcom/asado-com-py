@@ -61,5 +61,5 @@ function is_current(string $slug): string {
 function bg_picture(string $path, string $class): void {
     $webpPath = preg_replace('/\.(jpe?g|png)$/i', '.webp', $path);
     $hasWebp  = $webpPath !== $path && file_exists(dirname(__DIR__) . '/' . $webpPath);
-    ?><picture class="<?= e($class) ?>"><?php if ($hasWebp): ?><source srcset="<?= e(url($webpPath)) ?>" type="image/webp"><?php endif; ?><img src="<?= e(url($path)) ?>" alt="" loading="lazy"></picture><?php
+    ?><picture class="<?= e($class) ?>"><?php if ($hasWebp): ?><source srcset="<?= e('/' . ltrim($webpPath, '/')) ?>" type="image/webp"><?php endif; ?><img src="<?= e('/' . ltrim($path, '/')) ?>" alt="" loading="lazy"></picture><?php
 }
