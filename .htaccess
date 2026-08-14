@@ -51,7 +51,7 @@ ErrorDocument 404 /404.php
 </IfModule>
 
 # Bloquear acceso directo a los includes
-<FilesMatch "^(config|header|footer|cta)\.php$">
+<FilesMatch "^(config|header|footer|cta|zona-template|zonas-data)\.php$">
   <IfModule mod_authz_core.c>
     Require all denied
   </IfModule>
