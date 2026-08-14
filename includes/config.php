@@ -51,3 +51,15 @@ function is_current(string $slug): string {
     global $PAGE;
     return (isset($PAGE['slug']) && $PAGE['slug'] === $slug) ? ' aria-current="page"' : '';
 }
+
+/**
+ * Imprime una imagen de fondo (hero / split) como <picture>, con .webp
+ * primero si existe junto al .jpg y el .jpg de siempre como respaldo.
+ * Mantiene el mismo layout: el <picture> ocupa la clase que antes tenía
+ * el div.bg / .hero-media (position:absolute + object-fit:cover en CSS).
+ */
+function bg_picture(string $path, string $class): void {
+    $webpPath = preg_replace('/\.(jpe?g|png)$/i', '.webp', $path);
+    $hasWebp  = $webpPath !== $path && file_exists(dirname(__DIR__) . '/' . $webpPath);
+    ?><picture class="<?= e($class) ?>"><?php if ($hasWebp): ?><source srcset="<?= e(url($webpPath)) ?>" type="image/webp"><?php endif; ?><img src="<?= e(url($path)) ?>" alt="" loading="lazy"></picture><?php
+}

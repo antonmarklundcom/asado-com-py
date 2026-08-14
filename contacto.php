@@ -55,7 +55,7 @@ require __DIR__ . '/includes/header.php';
 ?>
 
 <section class="page-hero">
-  <div class="hero-media" style="background-image: url('/assets/img/servicio-parrillero.jpg')"></div>
+  <?php bg_picture('assets/img/servicio-parrillero.jpg', 'hero-media'); ?>
   <div class="hero-inner">
     <div class="hero-copy">
       <div class="eyebrow" data-reveal="1">CONTACTO</div>

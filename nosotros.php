@@ -9,7 +9,7 @@ require __DIR__ . '/includes/header.php';
 ?>
 
 <section class="page-hero">
-  <div class="hero-media" style="background-image: url('/assets/img/parrillero.jpg')"></div>
+  <?php bg_picture('assets/img/parrillero.jpg', 'hero-media'); ?>
   <div class="hero-inner">
     <div class="hero-copy">
       <div class="eyebrow" data-reveal="1">NOSOTROS</div>
@@ -27,7 +27,7 @@ require __DIR__ . '/includes/header.php';
     <p class="body-text body-text--dark">Por eso llevamos todo: parrilla, carbón, carne y oficio. Vos recibís a tu gente, nosotros nos ocupamos del fuego.</p>
   </div>
   <div class="split-media split-media--light" data-reveal="2">
-    <div class="bg" style="background-image: url('/assets/img/meat-grill.jpg')"></div>
+    <?php bg_picture('assets/img/meat-grill.jpg', 'bg'); ?>
   </div>
 </section>
 

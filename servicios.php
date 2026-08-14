@@ -9,7 +9,7 @@ require __DIR__ . '/includes/header.php';
 ?>
 
 <section class="page-hero">
-  <div class="hero-media" style="background-image: url('/assets/img/meat-grill.jpg')"></div>
+  <?php bg_picture('assets/img/meat-grill.jpg', 'hero-media'); ?>
   <div class="hero-inner">
     <div class="hero-copy">
       <div class="eyebrow" data-reveal="1">NUESTROS SERVICIOS</div>
@@ -36,13 +36,13 @@ require __DIR__ . '/includes/header.php';
     </a>
   </div>
   <div class="split-media split-media--light" data-reveal="2">
-    <div class="bg" style="background-image: url('/assets/img/servicio-completo.jpg')"></div>
+    <?php bg_picture('assets/img/servicio-completo.jpg', 'bg'); ?>
   </div>
 </section>
 
 <section id="parrillero" class="split split--dark">
   <div class="split-media split-media--dark" data-reveal="1">
-    <div class="bg" style="background-image: url('/assets/img/servicio-parrillero.jpg')"></div>
+    <?php bg_picture('assets/img/servicio-parrillero.jpg', 'bg'); ?>
   </div>
   <div class="split-copy" data-reveal="2">
     <div class="label">SERVICIO 02</div>
@@ -78,7 +78,7 @@ require __DIR__ . '/includes/header.php';
     </a>
   </div>
   <div class="split-media split-media--light" data-reveal="2">
-    <div class="bg" style="background-image: url('/assets/img/event-courtyard.jpg')"></div>
+    <?php bg_picture('assets/img/event-courtyard.jpg', 'bg'); ?>
   </div>
 </section>
 
