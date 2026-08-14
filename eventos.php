@@ -9,7 +9,7 @@ require __DIR__ . '/includes/header.php';
 ?>
 
 <section class="page-hero">
-  <div class="hero-media" style="background-image: url('/assets/img/event-courtyard.jpg')"></div>
+  <?php bg_picture('assets/img/event-courtyard.jpg', 'hero-media'); ?>
   <div class="hero-inner">
     <div class="hero-copy">
       <div class="eyebrow" data-reveal="1">EVENTOS QUE SE SIENTEN</div>
@@ -47,7 +47,7 @@ require __DIR__ . '/includes/header.php';
 
 <section class="split split--dark">
   <div class="split-media split-media--dark" data-reveal="1">
-    <div class="bg" style="background-image: url('/assets/img/evento-empresa.jpg')"></div>
+    <?php bg_picture('assets/img/evento-empresa.jpg', 'bg'); ?>
   </div>
   <div class="split-copy" data-reveal="2">
     <div class="label">CÓMO LO ORGANIZAMOS</div>
@@ -92,30 +92,42 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 
+<?php
+// Única fuente de verdad para las FAQ de eventos: alimenta el <details>
+// de abajo y el FAQPage JSON-LD, sin duplicar el texto a mano.
+$faqs = [
+    ['¿Cuál es el mínimo de personas para un evento?', 'Trabajamos desde 10 personas. Para grupos más chicos te conviene el servicio de parrillero a domicilio.'],
+    ['¿Necesito tener parrilla en el lugar?', 'No. Llevamos nuestra parrilla y el carbón. Solo necesitamos un espacio ventilado y acceso para descargar el equipo.'],
+    ['¿Con cuánta anticipación se reserva un evento grande?', 'Para más de 50 personas recomendamos 2 a 3 semanas. En noviembre y diciembre las fechas se agotan antes: escribinos cuanto antes.'],
+    ['¿Se puede probar el menú antes?', 'Sí, para eventos de más de 60 personas coordinamos una degustación previa sin costo adicional.'],
+];
+?>
 <section class="section section--light">
   <div class="wrap">
     <div class="label label--dark" data-reveal="1">PREGUNTAS DE EVENTOS</div>
     <h2 class="title title--dark title--sm" data-reveal="1">Antes de reservar.</h2>
     <div class="faq" data-reveal="2">
+      <?php foreach ($faqs as [$pregunta, $respuesta]): ?>
       <details>
-        <summary>¿Cuál es el mínimo de personas para un evento?</summary>
-        <p>Trabajamos desde 10 personas. Para grupos más chicos te conviene el servicio de parrillero a domicilio.</p>
+        <summary><?= e($pregunta) ?></summary>
+        <p><?= e($respuesta) ?></p>
       </details>
-      <details>
-        <summary>¿Necesito tener parrilla en el lugar?</summary>
-        <p>No. Llevamos nuestra parrilla y el carbón. Solo necesitamos un espacio ventilado y acceso para descargar el equipo.</p>
-      </details>
-      <details>
-        <summary>¿Con cuánta anticipación se reserva un evento grande?</summary>
-        <p>Para más de 50 personas recomendamos 2 a 3 semanas. En noviembre y diciembre las fechas se agotan antes: escribinos cuanto antes.</p>
-      </details>
-      <details>
-        <summary>¿Se puede probar el menú antes?</summary>
-        <p>Sí, para eventos de más de 60 personas coordinamos una degustación previa sin costo adicional.</p>
-      </details>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>
+
+<script type="application/ld+json">
+<?= json_encode([
+    '@context'   => 'https://schema.org',
+    '@type'      => 'FAQPage',
+    'mainEntity' => array_map(fn($f) => [
+        '@type'          => 'Question',
+        'name'           => $f[0],
+        'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]],
+    ], $faqs),
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?>
+</script>
 
 <?php $cta_msg = 'Hola! Quiero organizar un evento con asado 🔥'; ?>
 <?php require __DIR__ . '/includes/cta.php'; ?>

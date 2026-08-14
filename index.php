@@ -9,7 +9,7 @@ require __DIR__ . '/includes/header.php';
 ?>
 
 <section id="top" class="hero">
-  <div class="hero-media" style="background-image: url('/assets/img/hero-social.jpg')"></div>
+  <?php bg_picture('assets/img/hero-social.jpg', 'hero-media'); ?>
   <div class="hero-inner">
     <div class="hero-copy">
       <div class="eyebrow" data-reveal="1">ASADO A DOMICILIO PARAGUAY</div>
@@ -68,7 +68,7 @@ require __DIR__ . '/includes/header.php';
 
 <section id="experiencia" class="split split--dark">
   <div class="split-media split-media--dark" data-reveal="1">
-    <div class="bg" style="background-image: url('/assets/img/meat-grill.jpg')"></div>
+    <?php bg_picture('assets/img/meat-grill.jpg', 'bg'); ?>
   </div>
   <div class="split-copy" data-reveal="2">
     <div class="label">LA EXPERIENCIA ASADO</div>
@@ -90,7 +90,7 @@ require __DIR__ . '/includes/header.php';
     </a>
   </div>
   <div class="split-media split-media--light" data-reveal="2">
-    <div class="bg" style="background-image: url('/assets/img/event-courtyard.jpg')"></div>
+    <?php bg_picture('assets/img/event-courtyard.jpg', 'bg'); ?>
   </div>
 </section>
 
@@ -138,21 +138,75 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 
+<section class="section section--light">
+  <div class="wrap">
+    <div class="label label--dark label--center" data-reveal="1">LO QUE DICEN</div>
+    <h2 class="title title--dark title--sm center" data-reveal="1">Clientes que ya se sentaron a comer.</h2>
+    <!--
+      ⚠️ TESTIMONIOS DE MARCADOR DE POSICIÓN.
+      Reemplazar las 3 citas de abajo por comentarios reales de clientes
+      (con su consentimiento para publicar nombre y barrio) antes de
+      publicar el sitio. No dejar estos textos de ejemplo en producción.
+    -->
+    <div class="testimonials" data-reveal="2">
+      <blockquote class="testimonial">
+        <p>“Texto de ejemplo — reemplazar por una cita real de un cliente sobre el asado completo a domicilio.”</p>
+        <cite>Nombre Apellido — Barrio, Ciudad</cite>
+      </blockquote>
+      <blockquote class="testimonial">
+        <p>“Texto de ejemplo — reemplazar por una cita real de un cliente sobre el parrillero a domicilio.”</p>
+        <cite>Nombre Apellido — Barrio, Ciudad</cite>
+      </blockquote>
+      <blockquote class="testimonial">
+        <p>“Texto de ejemplo — reemplazar por una cita real de un cliente sobre un evento de empresa.”</p>
+        <cite>Nombre Apellido — Empresa, Ciudad</cite>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!--
+  Review/AggregateRating JSON-LD — dejar comentado hasta tener testimonios
+  reales. Descomentar y completar "author", "reviewBody" y "ratingValue"
+  con datos verdaderos recién cuando se reemplacen las citas de arriba.
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "ASADO.com.py",
+  "review": [
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Nombre Apellido" },
+      "reviewBody": "Cita real del cliente acá.",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "reviewCount": "1"
+  }
+}
+</script>
+-->
+
 <section class="section section--dark">
   <div class="wrap">
     <div class="label" data-reveal="1">ZONAS DE COBERTURA</div>
     <h2 class="title title--sm" data-reveal="1">Llegamos a todo<br>Gran Asunción.</h2>
     <ul class="zones" data-reveal="2">
-      <li>ASUNCIÓN</li>
-      <li>LAMBARÉ</li>
-      <li>FERNANDO DE LA MORA</li>
-      <li>SAN LORENZO</li>
-      <li>LUQUE</li>
-      <li>MARIANO ROQUE ALONSO</li>
-      <li>ÑEMBY</li>
-      <li>VILLA ELISA</li>
-      <li>CAPIATÁ</li>
-      <li>LIMPIO</li>
+      <li><a href="/asado-a-domicilio-en-asuncion.php">ASUNCIÓN</a></li>
+      <li><a href="/asado-a-domicilio-en-lambare.php">LAMBARÉ</a></li>
+      <li><a href="/asado-a-domicilio-en-fernando-de-la-mora.php">FERNANDO DE LA MORA</a></li>
+      <li><a href="/asado-a-domicilio-en-san-lorenzo.php">SAN LORENZO</a></li>
+      <li><a href="/asado-a-domicilio-en-luque.php">LUQUE</a></li>
+      <li><a href="/asado-a-domicilio-en-mariano-roque-alonso.php">MARIANO ROQUE ALONSO</a></li>
+      <li><a href="/asado-a-domicilio-en-nemby.php">ÑEMBY</a></li>
+      <li><a href="/asado-a-domicilio-en-villa-elisa.php">VILLA ELISA</a></li>
+      <li><a href="/asado-a-domicilio-en-capiata.php">CAPIATÁ</a></li>
+      <li><a href="/asado-a-domicilio-en-limpio.php">LIMPIO</a></li>
       <li>SAN ANTONIO</li>
       <li>AREGUÁ</li>
     </ul>
@@ -160,38 +214,44 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 
+<?php
+// Única fuente de verdad para las FAQ: se usa para pintar el <details> de
+// abajo Y para el FAQPage JSON-LD, así nunca quedan desincronizados.
+$faqs = [
+    ['¿Con cuánta anticipación tengo que reservar?', 'Lo ideal es entre 3 y 7 días antes, sobre todo para fines de semana y feriados. Si es de un día para el otro escribinos igual: muchas veces tenemos lugar.'],
+    ['¿Llevan la parrilla y el carbón?', 'Sí. En el servicio de asado completo llevamos parrilla, carbón, leña, utensilios y todo lo necesario. Si ya tenés parrilla en tu casa, contratás solo el parrillero.'],
+    ['¿Para cuántas personas trabajan?', 'Desde grupos de 10 personas hasta eventos de más de 200. Para grupos grandes coordinamos con más tiempo y sumamos parrilleros al equipo.'],
+    ['¿Qué incluye el precio?', 'Carne, acompañamientos acordados, carbón, parrillero, servicio y limpieza de la parrilla. Te pasamos el presupuesto cerrado antes de confirmar: sin sorpresas.'],
+    ['¿Se puede pagar por transferencia?', 'Sí. Aceptamos transferencia bancaria, billeteras y efectivo. Se reserva la fecha con una seña y el resto se abona el día del evento.'],
+    ['¿Hacen opciones sin carne?', 'Sí. Sumamos provoleta, verduras a la parrilla, ensaladas y opciones vegetarianas al menú. Avisanos cuántas personas para dejarlo listo.'],
+];
+?>
 <section class="section section--light">
   <div class="wrap">
     <div class="label label--dark" data-reveal="1">PREGUNTAS FRECUENTES</div>
     <h2 class="title title--dark title--sm" data-reveal="1">Lo que más nos preguntan.</h2>
     <div class="faq" data-reveal="2">
+      <?php foreach ($faqs as [$pregunta, $respuesta]): ?>
       <details>
-        <summary>¿Con cuánta anticipación tengo que reservar?</summary>
-        <p>Lo ideal es entre 3 y 7 días antes, sobre todo para fines de semana y feriados. Si es de un día para el otro escribinos igual: muchas veces tenemos lugar.</p>
+        <summary><?= e($pregunta) ?></summary>
+        <p><?= e($respuesta) ?></p>
       </details>
-      <details>
-        <summary>¿Llevan la parrilla y el carbón?</summary>
-        <p>Sí. En el servicio de asado completo llevamos parrilla, carbón, leña, utensilios y todo lo necesario. Si ya tenés parrilla en tu casa, contratás solo el parrillero.</p>
-      </details>
-      <details>
-        <summary>¿Para cuántas personas trabajan?</summary>
-        <p>Desde grupos de 10 personas hasta eventos de más de 200. Para grupos grandes coordinamos con más tiempo y sumamos parrilleros al equipo.</p>
-      </details>
-      <details>
-        <summary>¿Qué incluye el precio?</summary>
-        <p>Carne, acompañamientos acordados, carbón, parrillero, servicio y limpieza de la parrilla. Te pasamos el presupuesto cerrado antes de confirmar: sin sorpresas.</p>
-      </details>
-      <details>
-        <summary>¿Se puede pagar por transferencia?</summary>
-        <p>Sí. Aceptamos transferencia bancaria, billeteras y efectivo. Se reserva la fecha con una seña y el resto se abona el día del evento.</p>
-      </details>
-      <details>
-        <summary>¿Hacen opciones sin carne?</summary>
-        <p>Sí. Sumamos provoleta, verduras a la parrilla, ensaladas y opciones vegetarianas al menú. Avisanos cuántas personas para dejarlo listo.</p>
-      </details>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>
+
+<script type="application/ld+json">
+<?= json_encode([
+    '@context'   => 'https://schema.org',
+    '@type'      => 'FAQPage',
+    'mainEntity' => array_map(fn($f) => [
+        '@type'          => 'Question',
+        'name'           => $f[0],
+        'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]],
+    ], $faqs),
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?>
+</script>
 
 <?php require __DIR__ . '/includes/cta.php'; ?>
 <?php require __DIR__ . '/includes/footer.php'; ?>
