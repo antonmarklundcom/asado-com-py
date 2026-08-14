@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /includes/
+Disallow: /gracias.php
+
+Sitemap: https://asado.com.py/sitemap.xml
