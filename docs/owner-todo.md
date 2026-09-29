@@ -24,3 +24,9 @@ Sin fotos el sitio se ve correcto: los bloques con foto se ocultan, la galería 
 - [ ] Registrar el sitio en Google Search Console y enviar `sitemap.xml`.
 - [ ] Crear el perfil de Google Business Profile.
 - [ ] Nota: existe la rama `claude/asado-website-rebuild-3tn144` con fotos, páginas por ciudad y testimonios que no entraron a `master`; revisar los testimonios (no usar reseñas inventadas).
+
+## Deploy por Git (hPanel → Avanzado → GIT)
+1. Repositorio `antonmarklundcom/asado-com-py`, rama `master`, ruta de instalación vacía (= `public_html`). `public_html` tiene que estar vacío en el primer deploy (borrá `default.php` o los archivos del sitio viejo).
+2. Copiá la URL del webhook de Hostinger a GitHub → Settings → Webhooks (evento push): cada merge redeploya solo.
+3. Los archivos ignorados por Git (`config.php`, `.env`, `storage/`) no viajan: creálos una sola vez por el administrador de archivos y no se pisan en los deploys siguientes.
+4. Después del primer deploy, verificá que `/docs/`, `/.git/HEAD` y `/PLAN.md` den 403/404.
