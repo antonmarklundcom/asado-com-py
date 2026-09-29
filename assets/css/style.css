@@ -866,3 +866,23 @@ img { max-width: 100%; display: block; }
 .stack-center { display: flex; flex-direction: column; align-items: center; }
 .stack-center .link-arrow,
 .stack-center .btn-outline { align-self: center; }
+
+/* ------------------------------------------------------------ utilidades -- */
+
+.hero--short { min-height: max(80svh, 620px); }
+.section--flush { padding-bottom: 0; }
+.price {
+  font-family: var(--serif);
+  font-size: clamp(26px, 2.4vw, 36px);
+  color: var(--ink-3);
+  margin-top: clamp(20px, 2.2vw, 28px);
+}
+.price-unit {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--gold-dark);
+  margin-top: 10px;
+}
+.alert--error { margin-top: 28px; }
+.hp { position: absolute; left: -9999px; }
+.btn-form { margin-top: 10px; }

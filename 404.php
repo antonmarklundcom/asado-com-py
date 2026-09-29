@@ -5,12 +5,13 @@ $PAGE = [
     'title' => 'Página no encontrada | ASADO.com.py',
     'desc'  => 'La página que buscás no existe. Volvé al inicio o escribinos por WhatsApp.',
     'path'  => '/404.php',
+    'noindex' => true,
 ];
 require __DIR__ . '/includes/header.php';
 ?>
 
-<section class="hero" style="min-height: max(80svh, 600px)">
-  <div class="hero-media" style="background-image: url('/assets/img/meat-grill.jpg')"></div>
+<section class="hero hero--short">
+  <div class="hero-media"<?= bg('meat-grill.jpg') ?>></div>
   <div class="hero-inner">
     <div class="hero-copy">
       <div class="eyebrow" data-reveal="1">ERROR 404</div>
