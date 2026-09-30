@@ -2,19 +2,20 @@
 $PAGE = [
     'slug'  => 'gracias',
     'title' => 'Gracias por escribirnos | ASADO.com.py',
-    'desc'  => 'Recibimos tu consulta. Te respondemos dentro de las 24 horas.',
+    'desc'  => 'Recibimos tu consulta. Te respondemos a la brevedad; si es para una fecha cercana, escribinos por WhatsApp y lo resolvemos ahora mismo.',
+    'noindex' => true,
     'path'  => '/gracias.php',
 ];
 require __DIR__ . '/includes/header.php';
 ?>
 
-<section class="hero" style="min-height: max(80svh, 620px)">
-  <div class="hero-media" style="background-image: url('/assets/img/hero-social.jpg')"></div>
+<section class="hero hero--short">
+  <div class="hero-media"<?= bg('hero-social.jpg') ?>></div>
   <div class="hero-inner">
     <div class="hero-copy">
       <div class="eyebrow" data-reveal="1">CONSULTA RECIBIDA</div>
       <h1 class="display display--sm" data-reveal="2">Gracias.<br>Ya estamos en eso.</h1>
-      <p class="hero-lead" data-reveal="3">Te respondemos dentro de las 24 horas. Si es para una fecha cercana, escribinos por WhatsApp y lo resolvemos ahora.</p>
+      <p class="hero-lead" data-reveal="3">Te respondemos a la brevedad. Si es para una fecha cercana, escribinos por WhatsApp y lo resolvemos ahora.</p>
       <a class="btn-outline" data-reveal="4" href="<?= e(wa('Hola! Acabo de enviar una consulta desde la web.')) ?>" target="_blank" rel="noopener">
         <?= wa_icon(18) ?><span>ESCRIBIR POR WHATSAPP</span>
       </a>

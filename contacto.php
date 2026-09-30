@@ -47,15 +47,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $PAGE = [
     'slug'  => 'contacto',
-    'title' => 'Contacto | ASADO.com.py',
-    'desc'  => 'Pedí tu asado a domicilio en Gran Asunción. Escribinos por WhatsApp o dejanos tus datos y te respondemos.',
+    'title' => 'Pedí tu asado: contacto y WhatsApp | ASADO.com.py',
+    'desc'  => 'Pedí tu asado a domicilio en Gran Asunción. Escribinos por WhatsApp o dejanos tus datos en el formulario y te respondemos a la brevedad.',
+    'crumb' => 'Contacto',
     'path'  => '/contacto.php',
 ];
 require __DIR__ . '/includes/header.php';
 ?>
 
 <section class="page-hero">
-  <div class="hero-media" style="background-image: url('/assets/img/servicio-parrillero.jpg')"></div>
+  <div class="hero-media"<?= bg('servicio-parrillero.jpg') ?>></div>
   <div class="hero-inner">
     <div class="hero-copy">
       <div class="eyebrow" data-reveal="1">CONTACTO</div>
@@ -77,7 +78,7 @@ require __DIR__ . '/includes/header.php';
         <h2 class="title title--sm">Dejanos tus datos.</h2>
 
         <?php if ($errores): ?>
-        <div class="alert alert--error" style="margin-top: 28px">
+        <div class="alert alert--error">
           <?php foreach ($errores as $err): ?>
             <div><?= e($err) ?></div>
           <?php endforeach; ?>
@@ -121,15 +122,15 @@ require __DIR__ . '/includes/header.php';
           </div>
 
           <!-- honeypot anti-spam: no tocar -->
-          <div style="position:absolute; left:-9999px" aria-hidden="true">
+          <div class="hp" aria-hidden="true">
             <label for="website">No completar</label>
             <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
           </div>
 
-          <button type="submit" class="btn-outline" style="margin-top: 10px">
+          <button type="submit" class="btn-outline btn-form">
             <span>ENVIAR CONSULTA</span>
           </button>
-          <p class="form-note">Te respondemos dentro de las 24 horas. Tus datos se usan solo para responder esta consulta.</p>
+          <p class="form-note">Te respondemos a la brevedad. Tus datos se usan solo para responder esta consulta.</p>
         </form>
       </div>
 
@@ -147,16 +148,18 @@ require __DIR__ . '/includes/header.php';
           </li>
           <li>
             <span>ZONA DE SERVICIO</span>
-            Gran Asunción, Paraguay
+            <?= e(SITE_REGION) ?>
           </li>
+          <?php if (HORARIOS !== ''): ?>
           <li>
             <span>HORARIOS DE ATENCIÓN</span>
-            Lunes a domingo · 08:00 a 22:00
+            <?= e(HORARIOS) ?>
           </li>
+          <?php endif; ?>
           <?php if (INSTAGRAM_URL): ?>
           <li>
             <span>INSTAGRAM</span>
-            <a href="<?= e(INSTAGRAM_URL) ?>" target="_blank" rel="noopener">@asado.com.py</a>
+            <a href="<?= e(INSTAGRAM_URL) ?>" target="_blank" rel="noopener">@<?= e(basename(rtrim(parse_url(INSTAGRAM_URL, PHP_URL_PATH) ?? "", "/"))) ?></a>
           </li>
           <?php endif; ?>
         </ul>

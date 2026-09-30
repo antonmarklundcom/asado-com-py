@@ -61,4 +61,17 @@ ErrorDocument 404 /404.php
   </IfModule>
 </FilesMatch>
 
+# Con el deploy por Git, la raíz del repo ES el sitio: cerramos todo lo interno.
+RedirectMatch 404 ^/(docs|includes)(/|$)
+RedirectMatch 404 ^/\.git(/|$)
+<FilesMatch "(?i)(^\.git|\.(md|sh|json|lock|ya?ml|log|example)$)">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
 Options -Indexes

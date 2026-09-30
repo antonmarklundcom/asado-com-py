@@ -1,15 +1,23 @@
 <?php
+$FAQ = [
+    ['¿Cuál es el mínimo de personas para un evento?', 'Escribinos con la cantidad de invitados y te decimos qué servicio te conviene: si son pocos, suele alcanzar con el parrillero a domicilio.'],
+    ['¿Necesito tener parrilla en el lugar?', 'No. En el servicio completo llevamos la parrilla y el carbón. Solo necesitamos un espacio ventilado y acceso para descargar el equipo.'],
+    ['¿Con cuánta anticipación se reserva un evento grande?', 'Cuanto antes mejor, sobre todo en fin de año, cuando las fechas se ocupan primero. Escribinos apenas tengas la fecha.'],
+    ['¿Se puede probar el menú antes?', 'Para eventos grandes lo conversamos: contanos la fecha y la cantidad de invitados y coordinamos los detalles del menú.'],
+];
+
 $PAGE = [
     'slug'  => 'eventos',
     'title' => 'Asado para eventos y empresas | ASADO.com.py',
-    'desc'  => 'Asado para eventos en Gran Asunción: cumpleaños, casamientos, asados de empresa y fin de año. Menú a medida, equipo completo y factura legal.',
+    'desc'  => 'Asado para eventos en Gran Asunción: cumpleaños, casamientos, asados de empresa y fin de año. Menú a medida y equipo completo. Pedí tu presupuesto.',
+    'crumb' => 'Eventos',
     'path'  => '/eventos.php',
 ];
 require __DIR__ . '/includes/header.php';
 ?>
 
 <section class="page-hero">
-  <div class="hero-media" style="background-image: url('/assets/img/event-courtyard.jpg')"></div>
+  <div class="hero-media"<?= bg('event-courtyard.jpg') ?>></div>
   <div class="hero-inner">
     <div class="hero-copy">
       <div class="eyebrow" data-reveal="1">EVENTOS QUE SE SIENTEN</div>
@@ -27,7 +35,7 @@ require __DIR__ . '/includes/header.php';
         <div class="svc-num">01</div>
         <div class="svc-rule"></div>
         <h3>ASADO<br>DE EMPRESA</h3>
-        <p>Fin de año, cierres de proyecto y celebraciones de equipo. Coordinamos con RR.HH., emitimos factura legal y respetamos los horarios de oficina.</p>
+        <p>Fin de año, cierres de proyecto y celebraciones de equipo. Coordinamos con quien organice, coordinamos fechas y horarios con vos.</p>
       </div>
       <div class="svc" data-reveal="3">
         <div class="svc-num">02</div>
@@ -39,24 +47,26 @@ require __DIR__ . '/includes/header.php';
         <div class="svc-num">03</div>
         <div class="svc-rule"></div>
         <h3>CASAMIENTOS<br>Y FECHAS GRANDES</h3>
-        <p>Menú degustado antes, equipo ampliado y tiempos coordinados con el resto del evento. Sin filas y sin comida fría.</p>
+        <p>Menú conversado antes, equipo ampliado y tiempos coordinados con el resto del evento. Sin filas y sin comida fría.</p>
       </div>
     </div>
   </div>
 </section>
 
 <section class="split split--dark">
+  <?php if (img_ok('evento-empresa.jpg')): ?>
   <div class="split-media split-media--dark" data-reveal="1">
-    <div class="bg" style="background-image: url('/assets/img/evento-empresa.jpg')"></div>
+    <div class="bg"<?= bg('evento-empresa.jpg') ?>></div>
   </div>
+  <?php endif; ?>
   <div class="split-copy" data-reveal="2">
     <div class="label">CÓMO LO ORGANIZAMOS</div>
     <h2 class="title">Un solo interlocutor,<br>de principio a fin.</h2>
     <p class="body-text">Te asignamos un responsable que coordina el menú, el equipo y los horarios. El día del evento ya está todo hablado: solo hay que prender el fuego.</p>
     <ul class="svc-list">
-      <li>Visita o llamada previa para ver el espacio</li>
+      <li>Llamada previa para ver el espacio y los detalles</li>
       <li>Menú y cantidades cerradas por escrito</li>
-      <li>Montaje 2 a 3 horas antes del servicio</li>
+      <li>Montaje con anticipación al servicio</li>
       <li>Servicio por tandas para que nadie espere</li>
       <li>Retiro completo del equipo al finalizar</li>
     </ul>
@@ -71,22 +81,22 @@ require __DIR__ . '/includes/header.php';
       <div class="step" data-reveal="2">
         <div class="step-num">01</div>
         <h3>Presupuesto formal</h3>
-        <p>Documento con detalle de menú, cantidades y precio final por persona.</p>
+        <p>Detalle de menú, cantidades y precio, por escrito.</p>
       </div>
       <div class="step" data-reveal="3">
         <div class="step-num">02</div>
-        <h3>Factura legal</h3>
-        <p>Emitimos factura a nombre de la empresa con todos los datos fiscales.</p>
+        <h3>Datos de facturación</h3>
+        <p>Si tu empresa necesita comprobante, consultanos al pedir el presupuesto.</p>
       </div>
       <div class="step" data-reveal="4">
         <div class="step-num">03</div>
         <h3>Personal identificado</h3>
-        <p>Equipo uniformado y con datos informados si el edificio lo requiere.</p>
+        <p>Si el edificio pide datos del equipo, los informamos antes.</p>
       </div>
       <div class="step" data-reveal="5">
         <div class="step-num">04</div>
-        <h3>Pago a convenir</h3>
-        <p>Seña para reservar la fecha y saldo por transferencia después del evento.</p>
+        <h3>Pago a coordinar</h3>
+        <p>La forma de pago la coordinamos al armar el presupuesto.</p>
       </div>
     </div>
   </div>
@@ -96,24 +106,7 @@ require __DIR__ . '/includes/header.php';
   <div class="wrap">
     <div class="label label--dark" data-reveal="1">PREGUNTAS DE EVENTOS</div>
     <h2 class="title title--dark title--sm" data-reveal="1">Antes de reservar.</h2>
-    <div class="faq" data-reveal="2">
-      <details>
-        <summary>¿Cuál es el mínimo de personas para un evento?</summary>
-        <p>Trabajamos desde 10 personas. Para grupos más chicos te conviene el servicio de parrillero a domicilio.</p>
-      </details>
-      <details>
-        <summary>¿Necesito tener parrilla en el lugar?</summary>
-        <p>No. Llevamos nuestra parrilla y el carbón. Solo necesitamos un espacio ventilado y acceso para descargar el equipo.</p>
-      </details>
-      <details>
-        <summary>¿Con cuánta anticipación se reserva un evento grande?</summary>
-        <p>Para más de 50 personas recomendamos 2 a 3 semanas. En noviembre y diciembre las fechas se agotan antes: escribinos cuanto antes.</p>
-      </details>
-      <details>
-        <summary>¿Se puede probar el menú antes?</summary>
-        <p>Sí, para eventos de más de 60 personas coordinamos una degustación previa sin costo adicional.</p>
-      </details>
-    </div>
+    <?php faq_render($FAQ); ?>
   </div>
 </section>
 

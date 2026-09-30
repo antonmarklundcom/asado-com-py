@@ -7,7 +7,10 @@
  *     'title' => 'Servicios | ASADO.com.py',
  *     'desc'  => 'Descripción para Google (máx ~155 caracteres).',
  *     'path'  => '/servicios.php',
- *     'image' => 'assets/img/hero-social.jpg',   // opcional
+ *     'image' => 'assets/img/hero-social.jpg',   // opcional (si no existe, no se emite og:image)
+ *     'crumb' => 'Servicios',                    // nombre en el breadcrumb
+ *     'noindex' => true,                         // opcional
+ *   Si la página define $FAQ = [[pregunta, respuesta], ...] se emite FAQPage.
  *   ];
  */
 require_once __DIR__ . '/config.php';
@@ -18,12 +21,50 @@ $PAGE = array_merge([
     'desc'  => 'Asado a domicilio en Gran Asunción. Parrilleros expertos, carne de calidad, todo incluido. Pedí por WhatsApp.',
     'path'  => '/',
     'image' => 'assets/img/hero-social.jpg',
+    'noindex' => false,
 ], $PAGE ?? []);
 
 /** Icono de WhatsApp reutilizable. */
 function wa_icon(int $size = 18): string {
     return '<svg width="' . $size . '" height="' . $size . '" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">'
         . '<path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.92C21.95 6.45 17.5 2 12.04 2m0 1.67c4.54 0 8.24 3.7 8.24 8.25s-3.7 8.24-8.24 8.24c-1.54 0-3.04-.42-4.34-1.23l-.31-.19-3.1.81.82-3.02-.2-.32a8.19 8.19 0 0 1-1.26-4.35c0-4.55 3.7-8.25 8.39-8.25m-3.6 4.03c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.43 1.03 2.6c.13.16 1.75 2.79 4.25 3.8 2.08.84 2.5.67 2.95.63.45-.04 1.46-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.17-.48-.29-.25-.13-1.46-.72-1.69-.8-.23-.09-.39-.13-.56.12-.16.25-.64.81-.79.98-.14.16-.29.19-.54.06-.25-.12-1.06-.39-2.02-1.25-.71-.63-1.19-1.4-1.33-1.65-.14-.25-.02-.39.11-.51.11-.11.29-.29.42-.45.14-.16.19-.27.29-.45.1-.19.05-.35-.02-.48-.06-.12-.54-1.34-.75-1.83-.2-.48-.4-.4-.56-.41h-.26"/></svg>';
+}
+?>
+<?php
+$canon = url($PAGE['path'] === '/' ? '' : $PAGE['path']);
+$ogimg = img_ok(basename($PAGE['image'])) ? url($PAGE['image']) : '';
+$noindex = !empty($PAGE['noindex']);
+
+$ld = [];
+if (!$noindex) {
+    $negocio = [
+        '@type'         => ['FoodEstablishment', 'CateringService'],
+        '@id'           => SITE_URL . '/#negocio',
+        'name'          => SITE_NAME,
+        'description'   => 'Asado a domicilio, parrillero a domicilio y asado para eventos en Gran Asunción, Paraguay.',
+        'url'           => SITE_URL . '/',
+        'servesCuisine' => 'Asado',
+        'areaServed'    => array_map(fn($z) => ['@type' => 'City', 'name' => $z], ZONAS),
+        'address'       => ['@type' => 'PostalAddress', 'addressCountry' => 'PY'],
+    ];
+    if ($ogimg !== '') { $negocio['image'] = url('assets/img/hero-social.jpg'); }
+    if (!wa_placeholder()) { $negocio['telephone'] = '+' . WHATSAPP_NUMBER; }
+    $sameAs = array_values(array_filter([INSTAGRAM_URL, FACEBOOK_URL]));
+    if ($sameAs) { $negocio['sameAs'] = $sameAs; }
+    $ld[] = ['@context' => 'https://schema.org'] + $negocio;
+    $ld[] = ['@context' => 'https://schema.org', '@type' => 'WebSite', 'name' => SITE_NAME,
+             'url' => SITE_URL . '/', 'inLanguage' => 'es-PY'];
+    if ($PAGE['slug'] !== 'home') {
+        $ld[] = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => [
+            ['@type' => 'ListItem', 'position' => 1, 'name' => 'Inicio', 'item' => SITE_URL . '/'],
+            ['@type' => 'ListItem', 'position' => 2, 'name' => $PAGE['crumb'] ?? $PAGE['title'], 'item' => $canon],
+        ]];
+    }
+    if (!empty($FAQ)) {
+        $ld[] = ['@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => array_map(
+            fn($qa) => ['@type' => 'Question', 'name' => $qa[0],
+                        'acceptedAnswer' => ['@type' => 'Answer', 'text' => $qa[1]]], $FAQ)];
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -33,52 +74,41 @@ function wa_icon(int $size = 18): string {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?= e($PAGE['title']) ?></title>
 <meta name="description" content="<?= e($PAGE['desc']) ?>">
-<link rel="canonical" href="<?= e(url($PAGE['path'])) ?>">
+<link rel="canonical" href="<?= e($canon) ?>">
 <meta name="theme-color" content="#0D0D0E">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="<?= $noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large' ?>">
 
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_PY">
 <meta property="og:site_name" content="<?= e(SITE_NAME) ?>">
 <meta property="og:title" content="<?= e($PAGE['title']) ?>">
 <meta property="og:description" content="<?= e($PAGE['desc']) ?>">
-<meta property="og:url" content="<?= e(url($PAGE['path'])) ?>">
-<meta property="og:image" content="<?= e(url($PAGE['image'])) ?>">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:url" content="<?= e($canon) ?>">
+<?php if ($ogimg !== ''): ?>
+<meta property="og:image" content="<?= e($ogimg) ?>">
+<meta property="og:image:alt" content="<?= e($PAGE['title']) ?>">
+<?php endif; ?>
+<meta name="twitter:card" content="<?= $ogimg !== '' ? 'summary_large_image' : 'summary' ?>">
+<meta name="twitter:title" content="<?= e($PAGE['title']) ?>">
+<meta name="twitter:description" content="<?= e($PAGE['desc']) ?>">
+<?php if ($ogimg !== ''): ?>
+<meta name="twitter:image" content="<?= e($ogimg) ?>">
+<?php endif; ?>
 
-<link rel="icon" href="/assets/img/favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<?php if (img_ok('favicon.png')): ?><link rel="icon" href="/assets/img/favicon.png" type="image/png"><?php endif; ?>
+<?php if (img_ok('apple-touch-icon.png')): ?><link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png"><?php endif; ?>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/style.css?v=1">
+<link rel="stylesheet" href="/assets/css/style.css?v=2">
 
+<?php foreach ($ld as $obj): ?>
 <script type="application/ld+json">
-<?= json_encode([
-    '@context'    => 'https://schema.org',
-    '@type'       => 'FoodEstablishment',
-    'additionalType' => 'https://schema.org/CateringService',
-    'name'        => SITE_NAME,
-    'description' => 'Asado a domicilio, parrillero a domicilio y asado para eventos en Gran Asunción, Paraguay.',
-    'url'         => SITE_URL,
-    'image'       => url('assets/img/hero-social.jpg'),
-    'telephone'   => '+' . WHATSAPP_NUMBER,
-    'priceRange'  => '₲₲',
-    'servesCuisine' => 'Parrilla paraguaya',
-    'address'     => [
-        '@type'          => 'PostalAddress',
-        'addressLocality'=> 'Asunción',
-        'addressRegion'  => 'Central',
-        'addressCountry' => 'PY',
-    ],
-    'areaServed'  => array_map(
-        fn($z) => ['@type' => 'City', 'name' => $z],
-        ['Asunción', 'Lambaré', 'Fernando de la Mora', 'San Lorenzo', 'Luque', 'Mariano Roque Alonso', 'Ñemby', 'Villa Elisa', 'Capiatá', 'Limpio']
-    ),
-    'sameAs'      => array_values(array_filter([INSTAGRAM_URL, FACEBOOK_URL])),
-], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?>
+<?= json_encode($obj, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?>
+
 </script>
+<?php endforeach; ?>
 </head>
 <body>
 

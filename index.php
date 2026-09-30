@@ -1,7 +1,16 @@
 <?php
+$FAQ = [
+    ['¿Con cuánta anticipación tengo que reservar?', 'Cuanto antes mejor, sobre todo para fines de semana y feriados. Escribinos por WhatsApp con la fecha y te confirmamos si tenemos lugar.'],
+    ['¿Llevan la parrilla y el carbón?', 'En el servicio de asado completo llevamos parrilla, carbón, leña, utensilios y todo lo necesario. Si ya tenés parrilla en tu casa, podés contratar solo el parrillero.'],
+    ['¿Para cuántas personas trabajan?', 'Trabajamos con grupos chicos y con eventos grandes. Contanos cuántos son y armamos el equipo y el menú para ese número.'],
+    ['¿Qué incluye el precio?', 'Depende del servicio que elijas: en el asado completo entran la carne, los acompañamientos, el carbón, el parrillero y el servicio. Te pasamos el presupuesto por escrito antes de confirmar.'],
+    ['¿Cómo se paga?', 'Coordinamos la forma de pago por WhatsApp al armar el presupuesto.'],
+    ['¿Hacen opciones sin carne?', 'Sí, podemos sumar provoleta, verduras a la parrilla y ensaladas al menú. Avisanos cuántas personas las necesitan para dejarlo listo.'],
+];
+
 $PAGE = [
     'slug'  => 'home',
-    'title' => 'ASADO.com.py — Asado a domicilio en Gran Asunción',
+    'title' => 'Asado a domicilio en Gran Asunción | ASADO.com.py',
     'desc'  => 'Asado a domicilio en Gran Asunción. Parrilleros expertos, carne de calidad y todo incluido: parrilla, carbón y servicio. Pedí por WhatsApp.',
     'path'  => '/',
 ];
@@ -9,7 +18,7 @@ require __DIR__ . '/includes/header.php';
 ?>
 
 <section id="top" class="hero">
-  <div class="hero-media" style="background-image: url('/assets/img/hero-social.jpg')"></div>
+  <div class="hero-media"<?= bg('hero-social.jpg') ?>></div>
   <div class="hero-inner">
     <div class="hero-copy">
       <div class="eyebrow" data-reveal="1">ASADO A DOMICILIO PARAGUAY</div>
@@ -67,9 +76,11 @@ require __DIR__ . '/includes/header.php';
 </section>
 
 <section id="experiencia" class="split split--dark">
+  <?php if (img_ok('meat-grill.jpg')): ?>
   <div class="split-media split-media--dark" data-reveal="1">
-    <div class="bg" style="background-image: url('/assets/img/meat-grill.jpg')"></div>
+    <div class="bg"<?= bg('meat-grill.jpg') ?>></div>
   </div>
+  <?php endif; ?>
   <div class="split-copy" data-reveal="2">
     <div class="label">LA EXPERIENCIA ASADO</div>
     <h2 class="title">Carne premium.<br>Fuego real. Gente real.</h2>
@@ -89,9 +100,11 @@ require __DIR__ . '/includes/header.php';
       <span>MÁS SOBRE EVENTOS</span><i>&rarr;</i>
     </a>
   </div>
+  <?php if (img_ok('event-courtyard.jpg')): ?>
   <div class="split-media split-media--light" data-reveal="2">
-    <div class="bg" style="background-image: url('/assets/img/event-courtyard.jpg')"></div>
+    <div class="bg"<?= bg('event-courtyard.jpg') ?>></div>
   </div>
+  <?php endif; ?>
 </section>
 
 <section class="section section--dark">
@@ -123,7 +136,7 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<section id="nosotros" class="section section--dark" style="padding-bottom: 0">
+<section id="nosotros" class="section section--dark section--flush">
   <div class="wrap">
     <div class="about-grid" data-reveal="1">
       <div>
@@ -132,9 +145,11 @@ require __DIR__ . '/includes/header.php';
       </div>
       <p class="body-text mt-0">Llevamos parrilla, carbón y parrilleros a tu casa, tu oficina o tu salón en Gran Asunción. Vos elegís el lugar y la hora; del resto nos encargamos nosotros.</p>
     </div>
+    <?php if (img_ok('parrillero.jpg')): ?>
     <div class="wide-media" data-reveal="2">
-      <div class="bg" style="background-image: url('/assets/img/parrillero.jpg')"></div>
+      <div class="bg"<?= bg('parrillero.jpg') ?>></div>
     </div>
+    <?php endif; ?>
   </div>
 </section>
 
@@ -143,18 +158,9 @@ require __DIR__ . '/includes/header.php';
     <div class="label" data-reveal="1">ZONAS DE COBERTURA</div>
     <h2 class="title title--sm" data-reveal="1">Llegamos a todo<br>Gran Asunción.</h2>
     <ul class="zones" data-reveal="2">
-      <li>ASUNCIÓN</li>
-      <li>LAMBARÉ</li>
-      <li>FERNANDO DE LA MORA</li>
-      <li>SAN LORENZO</li>
-      <li>LUQUE</li>
-      <li>MARIANO ROQUE ALONSO</li>
-      <li>ÑEMBY</li>
-      <li>VILLA ELISA</li>
-      <li>CAPIATÁ</li>
-      <li>LIMPIO</li>
-      <li>SAN ANTONIO</li>
-      <li>AREGUÁ</li>
+      <?php foreach (ZONAS as $z): ?>
+      <li><?= e(mb_strtoupper($z, 'UTF-8')) ?></li>
+      <?php endforeach; ?>
     </ul>
     <p class="body-text" data-reveal="2">¿Estás fuera de la zona? Escribinos igual — según la fecha y el tamaño del grupo lo podemos coordinar.</p>
   </div>
@@ -164,32 +170,7 @@ require __DIR__ . '/includes/header.php';
   <div class="wrap">
     <div class="label label--dark" data-reveal="1">PREGUNTAS FRECUENTES</div>
     <h2 class="title title--dark title--sm" data-reveal="1">Lo que más nos preguntan.</h2>
-    <div class="faq" data-reveal="2">
-      <details>
-        <summary>¿Con cuánta anticipación tengo que reservar?</summary>
-        <p>Lo ideal es entre 3 y 7 días antes, sobre todo para fines de semana y feriados. Si es de un día para el otro escribinos igual: muchas veces tenemos lugar.</p>
-      </details>
-      <details>
-        <summary>¿Llevan la parrilla y el carbón?</summary>
-        <p>Sí. En el servicio de asado completo llevamos parrilla, carbón, leña, utensilios y todo lo necesario. Si ya tenés parrilla en tu casa, contratás solo el parrillero.</p>
-      </details>
-      <details>
-        <summary>¿Para cuántas personas trabajan?</summary>
-        <p>Desde grupos de 10 personas hasta eventos de más de 200. Para grupos grandes coordinamos con más tiempo y sumamos parrilleros al equipo.</p>
-      </details>
-      <details>
-        <summary>¿Qué incluye el precio?</summary>
-        <p>Carne, acompañamientos acordados, carbón, parrillero, servicio y limpieza de la parrilla. Te pasamos el presupuesto cerrado antes de confirmar: sin sorpresas.</p>
-      </details>
-      <details>
-        <summary>¿Se puede pagar por transferencia?</summary>
-        <p>Sí. Aceptamos transferencia bancaria, billeteras y efectivo. Se reserva la fecha con una seña y el resto se abona el día del evento.</p>
-      </details>
-      <details>
-        <summary>¿Hacen opciones sin carne?</summary>
-        <p>Sí. Sumamos provoleta, verduras a la parrilla, ensaladas y opciones vegetarianas al menú. Avisanos cuántas personas para dejarlo listo.</p>
-      </details>
-    </div>
+    <?php faq_render($FAQ); ?>
   </div>
 </section>
 

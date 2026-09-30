@@ -11,7 +11,7 @@
       <a href="/contacto.php">CONTACTO</a>
     </div>
     <div class="footer-links">
-      <span>GRAN ASUNCIÓN, PARAGUAY</span>
+      <span><?= e(mb_strtoupper(SITE_REGION, "UTF-8")) ?></span>
       <a href="<?= e(wa()) ?>" target="_blank" rel="noopener">WHATSAPP</a>
       <?php if (INSTAGRAM_URL): ?><a href="<?= e(INSTAGRAM_URL) ?>" target="_blank" rel="noopener">INSTAGRAM</a><?php endif; ?>
       <span>&copy; <?= date('Y') ?></span>
